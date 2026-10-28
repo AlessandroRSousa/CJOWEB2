@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 import { User } from '../../core/model';
 
@@ -24,8 +24,18 @@ export class UserRegisterComponent {
 
   passwordConfirmation = '';
 
-  save(): void {
+  save(form: NgForm): void {
     console.log(this.user);
+  }
+
+  clear(form: NgForm): void {
+    form.resetForm();
+    this.user = new User();
+    this.passwordConfirmation = '';
+  }
+
+  passwordsMatch(): boolean {
+    return this.user.password === this.passwordConfirmation;
   }
 
 }
