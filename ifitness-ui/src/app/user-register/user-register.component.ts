@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 
 import { User } from '../../core/model';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-user-register',
@@ -24,8 +25,23 @@ export class UserRegisterComponent {
 
   passwordConfirmation = '';
 
+  successMessage = '';
+  errorMessages: string[] = [];
+
+  constructor(private userService: UserService) { }
+
   save(form: NgForm): void {
-    console.log(this.user);
+    this.successMessage = '';
+    this.errorMessages = [];
+
+    this.userService.add(this.user)
+      .then(userSaved => {
+        this.successMessage = `Usuário ${userSaved.name} cadastrado com sucesso!`;
+        this.clear(form);
+      })
+      .catch(response => {
+        this.errorMessages = this.getErrorMessages(response);
+      });
   }
 
   clear(form: NgForm): void {
@@ -36,6 +52,18 @@ export class UserRegisterComponent {
 
   passwordsMatch(): boolean {
     return this.user.password === this.passwordConfirmation;
+  }
+
+  private getErrorMessages(response: any): string[] {
+    // erros de validação: a API devolve uma lista
+    if (Array.isArray(response.error)) {
+      return response.error.map((error: any) => error.userMessage);
+    }
+    // mensagem inválida: a API devolve um único objeto
+    if (response.error?.userMessage) {
+      return [response.error.userMessage];
+    }
+    return ['Erro ao processar serviço remoto. Tente novamente.'];
   }
 
 }

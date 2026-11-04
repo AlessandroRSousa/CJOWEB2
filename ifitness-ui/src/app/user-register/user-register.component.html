@@ -4,6 +4,22 @@
     <form #f="ngForm" autocomplete="off" (ngSubmit)="save(f)">
       <h1 class="text-center">Cadastre-se</h1>
 
+       @if (successMessage) {
+        <div class="alert alert-success" role="alert">
+          <i class="bi bi-check-circle me-1"></i> {{ successMessage }}
+        </div>
+      }
+
+      @if (errorMessages.length > 0) {
+        <div class="alert alert-danger" role="alert">
+          <ul class="mb-0">
+            @for (message of errorMessages; track message) {
+              <li>{{ message }}</li>
+            }
+          </ul>
+        </div>
+      }
+
       <div class="mb-2">
         <label for="name">Nome completo*</label>
         <input type="text" name="name" id="name" class="form-control"
