@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  background-color: lightgrey;
+  padding: 20px;
+}
+
+h2 {
+  color: green;
+  text-align: center;
+}
+
+input, select {
+  width: 100%;
+}
+
+button, .link {
+  width: 100%;
+}
+
+footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}

@@ -1,0 +1,8 @@
+@if (messageService.messages.length > 0) {
+  <div class="alert alert-{{ messageService.type }} alert-dismissible" role="alert">
+    <button type="button" class="btn-close" aria-label="Fechar" (click)="messageService.clear()"></button>
+    @for (message of messageService.messages; track message) {
+      <div>{{ message }}</div>
+    }
+  </div>
+}
