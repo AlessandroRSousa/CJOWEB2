@@ -18,4 +18,8 @@ export class UserService {
     return await firstValueFrom(this.http.post<User>(this.usersUrl, body));
   }
 
+  async findById(id: number): Promise<User> {
+    return await firstValueFrom(this.http.get<User>(`${this.usersUrl}/${id}`));
+  }
+
 }
